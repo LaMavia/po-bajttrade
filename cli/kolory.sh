@@ -1,12 +1,28 @@
 #!/bin/bash
 
 kprint () {
-  local kolor=$1
-  local tekst=$2
+  local tekst="$1"
+  shift
+  local patern=("$@")
 
-  printf '\e[%sm%s\e[0m\n' "$kolor" "$tekst"
+  local typ=${patern[0]}
+  local kolor=${patern[1]}
+
+  printf '[\e[%sm%s\e[0m] %s\n' "$kolor" "$typ" "$tekst"
 }
 
-export UDANE='1;32'
-export BLAD='1;31'
-export INFO='1;36'
+UDANE=('OK' '1;32')
+BLAD=('BŁĄD' '1;31')
+INFO=('INFO' '1;34')
+
+ok_print () {
+  kprint "$1" "${UDANE[@]}"
+}
+
+blad_print () {
+  kprint "$1" "${BLAD[@]}"
+}
+
+info_print () {
+  kprint "$1" "${INFO[@]}"
+}

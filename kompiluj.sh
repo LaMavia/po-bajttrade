@@ -1,15 +1,23 @@
 #!/bin/bash
 
-# Import funkcji
+# ustawienie cwd
 cd "$(dirname "$0")" || exit 1
+
+# import funkcji
 source ./cli/kolory.sh
 
-mvn package
 
-if [ $? -eq 0 ]; then
-    kprint "$UDANE" 'Kompilacja udana'
+# kompilacja
+kod_wyjscia=0
+
+info_print 'Kompilowanie projektu...'
+
+if mvn package; then
+    ok_print 'Kompilacja udana.'
 else
-    kprint "$BLAD" "Błąd kompilacji; kod wyjścia: ${?}"
+    kod_wyjscia="$?"
+    blad_print "Błąd kompilacji: ${kod_wyjscia}. Szczegóły powyżej."
 fi
 
-exit $?
+# propagowanie kodu wyjścia
+exit "$kod_wyjscia"
