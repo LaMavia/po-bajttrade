@@ -7,6 +7,6 @@ kprint () {
   printf '\e[%sm%s\e[0m\n' "$kolor" "$tekst"
 }
 
-UDANE='1;32'
-BLAD='1;31'
-INFO='1;36'
+export UDANE='1;32'
+export BLAD='1;31'
+export INFO='1;36'
