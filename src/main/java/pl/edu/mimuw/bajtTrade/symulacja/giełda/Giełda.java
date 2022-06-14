@@ -1,5 +1,5 @@
 package pl.edu.mimuw.bajtTrade.symulacja.giełda;
 
-public abstract class GiełdaAbstrakcyjna {
+public abstract class Giełda {
   
 }

@@ -39,4 +39,9 @@ public class OpisDnia {
     return this.wystawieniaSprzedaży.getOrDefault(typ, 0);
   }
 
+  public OpisDnia ustawDzień(int d) {
+    dzień = d;
+
+    return this;
+  }
 }

@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Iterator;
 
-public class ListaPoziomowa implements Iterable<Para<Integer, Integer>> {
+public class ListaPoziomowa<T extends Number> implements Iterable<Para<Integer, Integer>> {
   private static class Komórka<T> implements Iterable<Integer> {
     private class KomórkaIterator implements Iterator<Integer> {
       private Integer[] indeksy;
@@ -89,30 +89,30 @@ public class ListaPoziomowa implements Iterable<Para<Integer, Integer>> {
     }
   }
 
-  private Komórka<Komórka<Integer>> poziomy;
+  private Komórka<Komórka<T>> poziomy;
 
   public ListaPoziomowa() {
     poziomy = new Komórka<>();
   }
 
-  public Integer daj(int poziomIndeks, int wierszIndeks) {
-    Komórka<Integer> p = poziomy.daj(poziomIndeks);
+  public T daj(int poziomIndeks, int wierszIndeks) {
+    Komórka<T> p = poziomy.daj(poziomIndeks);
 
     if (p == null) {
-      return 0;
+      return null;
     }
 
     return p.daj(wierszIndeks);
   }
 
-  public Integer dodaj(int poziomIndeks, int wierszIndeks, int wartość) {
-    Komórka<Integer> p = poziomy.ustawJeśliPusty(poziomIndeks, new Komórka<Integer>());
+  public T dodaj(int poziomIndeks, int wierszIndeks, T wartość) {
+    Komórka<T> p = poziomy.ustawJeśliPusty(poziomIndeks, new Komórka<T>());
 
     if (p == null) {
-      return 0;
+      return null;
     }
 
-    return p.ustaw(wierszIndeks, p.daj(wierszIndeks) + wartość);
+    return p.ustaw(wierszIndeks, wartość); //  p.daj(wierszIndeks) + wartość
   }
 
   @Override
