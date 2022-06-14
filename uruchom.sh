@@ -53,7 +53,7 @@ sciezka_jar=$(find "$sciezka_target" -name "*.jar")
 klasa_main=$(find src/main/java/ -name "App.java" | sed 's/src\/main\/java\///' | sed 's/\.java//' | sed 's/\//./g')
 
 if [ -z "$sciezka_jar" ]; then
-    blad_print "Nie znaleziono pliku .jar w $(realpath "$sciezka_target")"
+    blad_print "Nie znaleziono pliku .jar w \"$(realpath "$sciezka_target")\""
     exit 1
 fi
 
@@ -61,7 +61,7 @@ fi
 kod_wyjscia=0
 
 if java -cp "$sciezka_jar" "$klasa_main" "$wejscie" "$wyjscie"; then
-    ok_print 'Wykonanie zakończone poprawnie'
+    ok_print 'Wykonanie zakończone pomyślnie'
 else
     kod_wyjscia="$?"
     blad_print "Błąd wykoniania: ${kod_wyjscia}. Szczegóły powyżej"
