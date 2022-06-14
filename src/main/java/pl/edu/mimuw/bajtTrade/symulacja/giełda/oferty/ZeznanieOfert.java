@@ -3,20 +3,23 @@ package pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty;
 import java.util.Iterator;
 import java.util.List;
 
-public class ZeznanieOfert {
-  private final List<OfertaKupna> ofertyKupna;
-  private final List<OfertaSprzedaży> ofertySprzedaży;
+import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.kupna.OfertaKupna;
+import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.sprzedaży.OfertaSprzedaży;
 
-  public ZeznanieOfert(List<OfertaKupna> ofertyKupna_, List<OfertaSprzedaży> ofertySprzedaży_) {
+public class ZeznanieOfert<K extends OfertaKupna, S extends OfertaSprzedaży> {
+  private final List<K> ofertyKupna;
+  private final List<S> ofertySprzedaży;
+
+  public ZeznanieOfert(List<K> ofertyKupna_, List<S> ofertySprzedaży_) {
     ofertyKupna = ofertyKupna_;
     ofertySprzedaży = ofertySprzedaży_;
   }
 
-  public Iterator<OfertaKupna> ofertyKupna() {
+  public Iterator<K> ofertyKupna() {
     return ofertyKupna.iterator();
   }
 
-  public Iterator<OfertaSprzedaży> ofertySprzedaży() {
+  public Iterator<S> ofertySprzedaży() {
     return ofertySprzedaży.iterator();
   }
 }

@@ -7,11 +7,12 @@ import java.util.List;
 import pl.edu.mimuw.bajtTrade.struktury.ListaPoziomowa;
 import pl.edu.mimuw.bajtTrade.symulacja.agenci.Agent;
 import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.Oferta;
-import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.OfertaKupna;
-import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.OfertaSprzedaży;
 import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.ZeznanieOfert;
+import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.kupna.OfertaKupna;
+import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.sprzedaży.OfertaSprzedaży;
 import pl.edu.mimuw.bajtTrade.symulacja.historia.Historia;
 import pl.edu.mimuw.bajtTrade.symulacja.zadoby.TypyZasobów;
+import pl.edu.mimuw.bajtTrade.symulacja.zadoby.produkty.Produkt;
 
 public class Robotnik extends Agent {
   private Hashtable<TypyZasobów, Integer> produktywność;
@@ -27,12 +28,22 @@ public class Robotnik extends Agent {
   }
 
   @Override
-  public ZeznanieOfert rozegrajDzień(int numerDnia, Historia historia) {
+  public ZeznanieOfert<OfertaKupna, OfertaSprzedaży> rozegrajDzień(int numerDnia, Historia historia) {
     List<OfertaKupna> ofertyKupna = new ArrayList<>();
     List<OfertaSprzedaży> ofertySprzedaży = new ArrayList<>();
 
     if (żywy()) {
-      
+      /* if (strategiaZajęcia.czySieUczy()) {
+        zresetujDniBezJedzenia();
+        
+        strategiaNauki.uczSie(...);
+      } else {
+        for (Produkt p : strategiaProdukcji.produkuj(...)) {
+          ofertySprzedaży.add(new OfertaSprzedaży(this, p));
+        }
+
+        ofertyKupna.addAll(strategiaKupna.coKupić());
+      } */
     }
 
     // wyczyść premię na koniec dnia

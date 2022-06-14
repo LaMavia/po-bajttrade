@@ -13,7 +13,7 @@ public class Oszczędny implements StrategiaZajęcia {
 
   @Override
   public boolean czySięUczy(Robotnik robotnik, int numerDnia, Historia historia) {
-    return robotnik.
+    return false;
   }
   
 }
