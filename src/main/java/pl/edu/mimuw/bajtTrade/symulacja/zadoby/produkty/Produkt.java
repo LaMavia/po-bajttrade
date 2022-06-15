@@ -9,9 +9,9 @@ import pl.edu.mimuw.bajtTrade.symulacja.zadoby.Zasób;
 
 public abstract class Produkt implements Comparable<Produkt> {
   private final TypyZasobów typ;
-  public int ilość;
+  public double ilość;
 
-  public Produkt(TypyZasobów typ, int ilość) {
+  public Produkt(TypyZasobów typ, double ilość) {
     this.typ = typ;
     this.ilość = ilość;
   }
@@ -20,7 +20,7 @@ public abstract class Produkt implements Comparable<Produkt> {
     return typ;
   }
 
-  public int ilość() {
+  public double ilość() {
     return ilość;
   }
 

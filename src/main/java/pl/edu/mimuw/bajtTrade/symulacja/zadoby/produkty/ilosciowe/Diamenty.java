@@ -7,7 +7,7 @@ import pl.edu.mimuw.bajtTrade.symulacja.zadoby.produkty.Produkt;
 
 public class Diamenty extends Produkt {
 
-  public Diamenty(int ilość) {
+  public Diamenty(double ilość) {
     super(TypyZasobów.Diamenty, ilość);
   }
 

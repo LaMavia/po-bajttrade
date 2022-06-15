@@ -1,18 +1,12 @@
 package pl.edu.mimuw.bajtTrade.symulacja.giełda;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.sprzedaży.OfertaSprzedaży;
 import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.sprzedaży.OfertaSprzedażyRobotnika;
 import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.sprzedaży.OfertaSprzedażySpekulanta;
-import pl.edu.mimuw.bajtTrade.symulacja.agenci.robotnicy.Robotnik;
-import pl.edu.mimuw.bajtTrade.symulacja.agenci.spekulanci.Spekulant;
-import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.ZeznanieOfert;
 import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.ZeznanieOfert.ZeznanieOfertRobotnika;
 import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.ZeznanieOfert.ZeznanieOfertSpekulanta;
-import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.kupna.OfertaKupna;
 import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.kupna.OfertaKupnaRobotnika;
 import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.kupna.OfertaKupnaSpekulanta;
 import pl.edu.mimuw.bajtTrade.symulacja.historia.Historia;
@@ -30,6 +24,12 @@ public abstract class Giełda {
 
   protected abstract Iterable<ZeznanieOfertRobotnika> ustawRobotników(
       List<ZeznanieOfertRobotnika> ofertyRobotników);
+
+  private void skupuj(int numerDnia, Historia historia, List<OfertaSprzedażyRobotnika> oferty) {
+    for (OfertaSprzedażyRobotnika oferta : oferty) {
+      oferta.wystawiający().nagrodź(historia.dajDzień(numerDnia - 1).dajCenęŚrednią(oferta.typ()) * oferta.ilość());
+    }
+  }
 
   public void przeprowadźHandel(int numerDnia, Historia historia,
       List<ZeznanieOfertRobotnika> ofertyRobotników,
@@ -50,6 +50,8 @@ public abstract class Giełda {
     }
 
     // rozlicz oferty robotników
+    List<OfertaSprzedażyRobotnika> ofertyDoSkupu = new ArrayList<>();
+
     for (ZeznanieOfertRobotnika zeznanie : ustawRobotników(
         ofertyRobotników)) {
       // rozlicz oferty sprzedaży
@@ -59,22 +61,29 @@ public abstract class Giełda {
         List<OfertaKupnaSpekulanta> ofertyKomplementacyjne = new ArrayList<>();
 
         for (OfertaKupnaSpekulanta ofertaKupna : ofertyKupnaSpekulantów) {
-          if (!ofertaKupna.czyWypełniona()) { // !!zmatchuj typ <- dodaj accessory do produktu?
+          if (!ofertaKupna.czyWypełniona() && ofertaKupna.typ() == oferta.typ()) { // !!zmatchuj typ <- dodaj accessory
+                                                                                   // do produktu?
             ofertyKomplementacyjne.add(ofertaKupna);
           }
         }
 
         ofertyKomplementacyjne.sort((a, b) -> a.compareTo(b));
         dopełnijOfertęSprzedaży(oferta, ofertyKomplementacyjne);
+
+        if (!oferta.czyWypełniona()) {
+          ofertyDoSkupu.add(oferta);
+        }
       }
 
+      // rozliczenie ofert kupna
       for (OfertaKupnaRobotnika oferta : zeznanie.ofertyKupna()) {
         // przefiltruj odpowiednie oferty
         List<OfertaSprzedażySpekulanta> ofertyKomplementacyjne = new ArrayList<>();
 
-        for (OfertaSprzedażySpekulanta ofertaKupna : ofertySprzedażySpekulantów) {
-          if (!ofertaKupna.czyWypełniona()) { // !!zmatchuj typ <- dodaj accessory do produktu?
-            ofertyKomplementacyjne.add(ofertaKupna);
+        for (OfertaSprzedażySpekulanta ofertaSprzedaży : ofertySprzedażySpekulantów) {
+          if (!ofertaSprzedaży.czyWypełniona() && ofertaSprzedaży.typ() == oferta.typ()) { // !!zmatchuj typ <- dodaj
+            // accessory do produktu?
+            ofertyKomplementacyjne.add(ofertaSprzedaży);
           }
         }
 
@@ -82,5 +91,7 @@ public abstract class Giełda {
         dopełnijOfertęKupna(oferta, ofertyKomplementacyjne);
       }
     }
+
+    skupuj(numerDnia, historia, ofertyDoSkupu);
   };
 }

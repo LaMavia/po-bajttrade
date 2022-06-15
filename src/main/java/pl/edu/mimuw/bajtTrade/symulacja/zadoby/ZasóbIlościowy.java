@@ -5,7 +5,7 @@ import pl.edu.mimuw.bajtTrade.symulacja.historia.Historia;
 import pl.edu.mimuw.bajtTrade.symulacja.zadoby.produkty.Produkt;
 
 public class ZasóbIlościowy extends Zasób {
-  private int ilość = 0;
+  private double ilość = 0;
 
   public ZasóbIlościowy(Agent właściciel_, TypyZasobów typ_) {
     super(właściciel_, typ_);
@@ -22,5 +22,7 @@ public class ZasóbIlościowy extends Zasób {
     ilość -= p.ilość();
   }
 
-  
+  public double ilość() {
+    return ilość;
+  }
 }

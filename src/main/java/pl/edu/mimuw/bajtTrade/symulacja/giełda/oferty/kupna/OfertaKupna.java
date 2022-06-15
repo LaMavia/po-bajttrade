@@ -12,7 +12,7 @@ public abstract class OfertaKupna<W extends Agent, K extends Agent> extends Ofer
 
   @Override
   public void wypełnij(Oferta<K, W> ofertaKomplementacyjna) {
-    int przemienione = ofertaKomplementacyjna.odejmij(produkt.ilość());
+    double przemienione = ofertaKomplementacyjna.odejmij(produkt.ilość());
 
     odejmij(przemienione);
     wystawiający.daj(produkt);

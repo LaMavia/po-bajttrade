@@ -1,6 +1,7 @@
 package pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty;
 
 import pl.edu.mimuw.bajtTrade.symulacja.agenci.Agent;
+import pl.edu.mimuw.bajtTrade.symulacja.zadoby.TypyZasobów;
 import pl.edu.mimuw.bajtTrade.symulacja.zadoby.produkty.Produkt;
 
 public abstract class Oferta<W extends Agent, K extends Agent> implements Comparable<Oferta<W, K>> {
@@ -33,8 +34,8 @@ public abstract class Oferta<W extends Agent, K extends Agent> implements Compar
    *                      `docelowaIlość > ilość`).
    * @return Zwraca ilość odjętą z oferty.
    */
-  public int odejmij(int docelowaIlość) {
-    int faktycznieOdjęte = Math.min(produkt.ilość(), docelowaIlość);
+  public double odejmij(double docelowaIlość) {
+    double faktycznieOdjęte = Math.min(produkt.ilość(), docelowaIlość);
 
     produkt.ilość -= faktycznieOdjęte;
 
@@ -48,6 +49,14 @@ public abstract class Oferta<W extends Agent, K extends Agent> implements Compar
   public int poziom() {
     return 1;
   };
+
+  public TypyZasobów typ() {
+    return produkt.typ();
+  }
+
+  public double ilość() {
+    return produkt.ilość();
+  }
 
   @Override
   public int compareTo(Oferta<W, K> inna) {

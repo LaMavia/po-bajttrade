@@ -44,7 +44,7 @@ public abstract class Agent {
     zasoby.get(p.typ()).dodaj(p);
   }
 
-  public void nagrodź(int ilośćDiamentów) {
+  public void nagrodź(double ilośćDiamentów) {
     this.zasoby.get(TypyZasobów.Diamenty).dodaj(new Diamenty(ilośćDiamentów));
   }
 
