@@ -27,4 +27,11 @@ public class OfertaKupnaSpekulanta extends OfertaKupna<Spekulant, Robotnik> {
 
     return (int) Math.signum(((OfertaKupnaSpekulanta) inna).cenaZaSztukę() - cenaZaSztukę());
   }
+
+  @Override
+  public void wypełnij(Oferta<Robotnik, Spekulant> ofertaKomplementacyjna) {
+    super.wypełnij(ofertaKomplementacyjna);
+
+    
+  }
 }
