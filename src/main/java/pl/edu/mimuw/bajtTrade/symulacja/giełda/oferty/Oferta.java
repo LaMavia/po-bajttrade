@@ -3,11 +3,11 @@ package pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty;
 import pl.edu.mimuw.bajtTrade.symulacja.agenci.Agent;
 import pl.edu.mimuw.bajtTrade.symulacja.zadoby.produkty.Produkt;
 
-public abstract class Oferta {
+public abstract class Oferta<W extends Agent, K extends Agent> implements Comparable<Oferta<W, K>> {
   protected Produkt produkt;
-  protected final Agent wystawiający;
+  protected final W wystawiający;
 
-  protected Oferta(Agent wystawiający_, Produkt produkt_) {
+  protected Oferta(W wystawiający_, Produkt produkt_) {
     wystawiający = wystawiający_;
     produkt = produkt_;
   }
@@ -19,7 +19,7 @@ public abstract class Oferta {
    * @param ofertaKomplementacyjna oferta typu przeciwnego
    *                               (kupna-sprzedaży/sprzedaży-kupna).
    */
-  public abstract void wypełnij(Oferta ofertaKomplementacyjna);
+  public abstract void wypełnij(Oferta<K, W> ofertaKomplementacyjna);
 
   public boolean czyWypełniona() {
     return (produkt.ilość() == 0);
@@ -41,14 +41,16 @@ public abstract class Oferta {
     return faktycznieOdjęte;
   }
 
-  public Agent wystawiający() {
+  public W wystawiający() {
     return wystawiający;
   }
 
   public int poziom() {
     return 1;
   };
-  public double cenaZaSztukę() {
-    return 0.0;
-  };
+
+  @Override
+  public int compareTo(Oferta<W, K> inna) {
+    return produkt.compareTo(inna.produkt);
+  }
 }

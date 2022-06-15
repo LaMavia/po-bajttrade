@@ -48,5 +48,9 @@ public abstract class Agent {
     this.zasoby.get(TypyZasobów.Diamenty).dodaj(new Diamenty(ilośćDiamentów));
   }
 
-  public abstract ZeznanieOfert<?, ?> rozegrajDzień(int numerDnia, Historia historia);
+  public abstract ZeznanieOfert<?, ?, ?> rozegrajDzień(int numerDnia, Historia historia);
+
+  public int id() {
+    return id;
+  }
 }

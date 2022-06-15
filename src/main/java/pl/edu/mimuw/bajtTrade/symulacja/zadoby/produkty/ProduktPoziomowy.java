@@ -10,4 +10,15 @@ public abstract class ProduktPoziomowy extends Produkt {
 
     poziom = poziom_;
   }
+
+  @Override
+  public int compareTo(Produkt inny) {
+    int c = super.compareTo(inny);
+
+    if (!(inny instanceof ProduktPoziomowy) || c != 0) {
+      return c;
+    }
+
+    return poziom - ((ProduktPoziomowy) inny).poziom;
+  }
 }

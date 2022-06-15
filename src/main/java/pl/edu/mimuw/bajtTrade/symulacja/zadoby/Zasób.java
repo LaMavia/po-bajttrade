@@ -8,6 +8,20 @@ public abstract class Zasób {
   protected Agent właściciel;
   protected final TypyZasobów typ;
 
+  public static int numerTypu(TypyZasobów typ) {
+    int i = 0;
+
+    for (TypyZasobów t : TypyZasobów.values()) {
+      if (typ == t) {
+        break;
+      } else {
+        i++;
+      }
+    }
+
+    return i;
+  }
+
   public Zasób(Agent właściciel_, TypyZasobów typ_) {
     właściciel = właściciel_;
     typ = typ_;

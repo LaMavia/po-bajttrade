@@ -19,6 +19,7 @@ public class ZasóbIlościowy extends Zasób {
   @Override
   protected void użyjBezpieczny(Produkt p, Historia historia) {
     p.zaaplikujDo(właściciel, historia);
+    ilość -= p.ilość();
   }
 
   

@@ -5,8 +5,9 @@ import pl.edu.mimuw.bajtTrade.symulacja.agenci.robotnicy.Robotnik;
 import pl.edu.mimuw.bajtTrade.symulacja.agenci.spekulanci.Spekulant;
 import pl.edu.mimuw.bajtTrade.symulacja.historia.Historia;
 import pl.edu.mimuw.bajtTrade.symulacja.zadoby.TypyZasobów;
+import pl.edu.mimuw.bajtTrade.symulacja.zadoby.Zasób;
 
-public abstract class Produkt {
+public abstract class Produkt implements Comparable<Produkt> {
   private final TypyZasobów typ;
   public int ilość;
 
@@ -35,5 +36,10 @@ public abstract class Produkt {
     } else if (agent instanceof Spekulant) {
       zaaplikujDo((Spekulant) agent, historia);
     }
+  }
+
+  @Override
+  public int compareTo(Produkt inny) {
+    return Zasób.numerTypu(typ()) - Zasób.numerTypu(inny.typ());
   }
 }

@@ -18,9 +18,9 @@ public class ZasóbPoziomowy extends Zasób {
   }
 
   @Override
-  protected int użyjBezpieczny(Produkt p, Historia historia) {
+  protected void użyjBezpieczny(Produkt p, Historia historia) {
     // TODO Auto-generated method stub
-    return 0;
+    return;
   }
   
 }
