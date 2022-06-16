@@ -4,8 +4,10 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
+import java.util.Map.Entry;
 import java.util.function.BiFunction;
 
+import pl.edu.mimuw.bajtTrade.struktury.Para;
 import pl.edu.mimuw.bajtTrade.symulacja.giełda.Giełda;
 import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.Oferta;
 import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.Ocenowana;
@@ -154,6 +156,21 @@ public class OpisDnia {
 
   public int ileWystawionoNaSprzedaż(TypyZasobów typ) {
     return this.wystawieniaSprzedaży.getOrDefault(typ, 0);
+  }
+
+  public Para<TypyZasobów, Double> dajMaxCenęŚrednią() {
+    double maksymalna = 0;
+    TypyZasobów typ = TypyZasobów.values()[0];
+
+    for (Entry<TypyZasobów, Double> wejście : cenyŚrednie.entrySet()) {
+      if (maksymalna < wejście.getValue()
+          || (maksymalna == wejście.getValue() && typ.compareTo(wejście.getKey()) < 0)) {
+        maksymalna = wejście.getValue();
+        typ = wejście.getKey();
+      }
+    }
+
+    return new Para<TypyZasobów, Double>(typ, maksymalna);
   }
 
   public OpisDnia ustawDzień(int d) {

@@ -115,7 +115,7 @@ public class Robotnik extends Agent {
 
         TypyZasobów typDoProdukcji = strategiaProdukcji.coProdukować(this, numerDnia, historia, produktywność);
 
-        Produkt wyprodukowanyProdukt = produkuj(typDoProdukcji, premie.getOrDefault(typDoProdukcji, 0));
+        Produkt wyprodukowanyProdukt = produkuj(typDoProdukcji, premie);
 
         if (wyprodukowanyProdukt.ilość() > 0 && Giełda.czyHandlowalny(typDoProdukcji)) {
           ofertySprzedaży.addAll(wykorzystajProgramy(wyprodukowanyProdukt).stream()
@@ -124,10 +124,6 @@ public class Robotnik extends Agent {
           nagrodź(wyprodukowanyProdukt.ilość());
         }
 
-        // for (Produkt p : strategiaProdukcji.produkuj(...)) {
-        // ofertySprzedaży.add(new OfertaSprzedaży(this, p));
-        // }
-        //
         // ofertyKupna.addAll(strategiaKupna.coKupić());
       }
     }
@@ -138,7 +134,8 @@ public class Robotnik extends Agent {
     return new ZeznanieOfertRobotnika(this, ofertyKupna, ofertySprzedaży);
   }
 
-  private Produkt produkuj(TypyZasobów typ, int premia) {
+  public Produkt produkuj(TypyZasobów typ, Map<TypyZasobów, Integer> premie) {
+    int premia = premie.getOrDefault(typ, 0);
     int ilość = this.produktywność.get(typ) / 100 * (100 + premia);
 
     Produkt wyjście = null;
