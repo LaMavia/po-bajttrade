@@ -14,6 +14,7 @@ import pl.edu.mimuw.bajtTrade.symulacja.agenci.robotnicy.kariera.Kariera;
 import pl.edu.mimuw.bajtTrade.symulacja.agenci.robotnicy.kariera.Programista;
 import pl.edu.mimuw.bajtTrade.symulacja.agenci.robotnicy.kariera.Rolnik;
 import pl.edu.mimuw.bajtTrade.symulacja.agenci.robotnicy.kariera.Rzemieślnik;
+import pl.edu.mimuw.bajtTrade.symulacja.agenci.robotnicy.strategia.StrategiaKupna;
 import pl.edu.mimuw.bajtTrade.symulacja.agenci.robotnicy.strategia.StrategiaNauki;
 import pl.edu.mimuw.bajtTrade.symulacja.agenci.robotnicy.strategia.StrategiaProdukcji;
 import pl.edu.mimuw.bajtTrade.symulacja.agenci.robotnicy.strategia.StrategiaZajęcia;
@@ -33,17 +34,19 @@ public class Robotnik extends Agent {
   private StrategiaZajęcia strategiaZajęcia;
   private StrategiaNauki strategiaNauki;
   private StrategiaProdukcji strategiaProdukcji;
+  private StrategiaKupna strategiaKupna;
   private Hashtable<TypyZasobów, Kariera> kariery;
   private TypyZasobów obecnaKariera;
 
   public Robotnik(int id_, Hashtable<TypyZasobów, Integer> zasoby_,
       Hashtable<TypyZasobów, Integer> produktywność_, StrategiaZajęcia strategiaZajęcia_, TypyZasobów pierwszaKariera,
-      StrategiaNauki strategiaNauki_, StrategiaProdukcji strategiaProdukcji_) {
+      StrategiaNauki strategiaNauki_, StrategiaProdukcji strategiaProdukcji_, StrategiaKupna strategiaKupna_) {
     super(id_, zasoby_);
 
     produktywność = produktywność_;
     strategiaZajęcia = strategiaZajęcia_;
     strategiaProdukcji = strategiaProdukcji_;
+    strategiaKupna = strategiaKupna_;
 
     strategiaNauki = strategiaNauki_;
 
@@ -124,13 +127,10 @@ public class Robotnik extends Agent {
           nagrodź(wyprodukowanyProdukt.ilość());
         }
 
-        // ofertyKupna.addAll(strategiaKupna.coKupić());
+        ofertyKupna.addAll(strategiaKupna.coKupić(this, zasoby, wyprodukowanyProdukt.ilość()));
       }
     }
 
-    // wyczyść premię na koniec dnia
-
-    // sprawdź, czy żyw, po karetkę nie dzwoń
     return new ZeznanieOfertRobotnika(this, ofertyKupna, ofertySprzedaży);
   }
 
