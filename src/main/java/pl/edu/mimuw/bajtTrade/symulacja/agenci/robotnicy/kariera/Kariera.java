@@ -30,4 +30,8 @@ public abstract class Kariera {
   public TypyZasobów produkt() {
     return produkt;
   }
+
+  public void rozwiń() {
+    poziom++;
+  }
 }

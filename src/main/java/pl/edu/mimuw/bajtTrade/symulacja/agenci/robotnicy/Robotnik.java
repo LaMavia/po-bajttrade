@@ -6,6 +6,12 @@ import java.util.List;
 
 import pl.edu.mimuw.bajtTrade.struktury.ListaPoziomowa;
 import pl.edu.mimuw.bajtTrade.symulacja.agenci.Agent;
+import pl.edu.mimuw.bajtTrade.symulacja.agenci.robotnicy.kariera.Górnik;
+import pl.edu.mimuw.bajtTrade.symulacja.agenci.robotnicy.kariera.Inżynier;
+import pl.edu.mimuw.bajtTrade.symulacja.agenci.robotnicy.kariera.Kariera;
+import pl.edu.mimuw.bajtTrade.symulacja.agenci.robotnicy.kariera.Programista;
+import pl.edu.mimuw.bajtTrade.symulacja.agenci.robotnicy.kariera.Rolnik;
+import pl.edu.mimuw.bajtTrade.symulacja.agenci.robotnicy.kariera.Rzemieślnik;
 import pl.edu.mimuw.bajtTrade.symulacja.agenci.robotnicy.strategia.StrategiaZajęcia;
 import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.Oferta;
 import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.ZeznanieOfert;
@@ -24,13 +30,24 @@ public class Robotnik extends Agent {
   private int dniBezJedzenia = 0;
   private boolean żywy = true;
   private StrategiaZajęcia strategiaZajęcia;
+  private Hashtable<TypyZasobów, Kariera> kariery;
+  private TypyZasobów obecnaKariera;
 
   public Robotnik(int id_, Hashtable<TypyZasobów, Integer> zasoby_,
-      Hashtable<TypyZasobów, Integer> produktywność_, StrategiaZajęcia strategiaZajęcia_) {
+      Hashtable<TypyZasobów, Integer> produktywność_, StrategiaZajęcia strategiaZajęcia_, TypyZasobów pierwszaKariera) {
     super(id_, zasoby_);
 
     produktywność = produktywność_;
     strategiaZajęcia = strategiaZajęcia_;
+
+    kariery = new Hashtable<>();
+    kariery.put(TypyZasobów.Jedzenie, new Rolnik());
+    kariery.put(TypyZasobów.Diamenty, new Górnik());
+    kariery.put(TypyZasobów.Ubrania, new Rzemieślnik());
+    kariery.put(TypyZasobów.Narzędzia, new Inżynier());
+    kariery.put(TypyZasobów.ProgramyKomputerowe, new Programista());
+
+    obecnaKariera = pierwszaKariera;
   }
 
   @Override
@@ -45,16 +62,18 @@ public class Robotnik extends Agent {
         // strategiaNauki.uczSie(...);
       } else {
         // for (Produkt p : strategiaProdukcji.produkuj(...)) {
-        //   ofertySprzedaży.add(new OfertaSprzedaży(this, p));
+        // ofertySprzedaży.add(new OfertaSprzedaży(this, p));
         // }
-        // 
+        //
         // ofertyKupna.addAll(strategiaKupna.coKupić());
       }
-      /* if (strategiaZajęcia.czySieUczy()) {
-        
-      } else {
-        
-      } */
+      /*
+       * if (strategiaZajęcia.czySieUczy()) {
+       * 
+       * } else {
+       * 
+       * }
+       */
     }
 
     // wyczyść premię na koniec dnia
@@ -86,5 +105,9 @@ public class Robotnik extends Agent {
 
   public void dajPremię(int premiaDoDodania) {
     premia += premiaDoDodania;
+  }
+
+  public TypyZasobów obecnaKariera() {
+    return obecnaKariera;
   }
 }

@@ -6,11 +6,13 @@ import pl.edu.mimuw.bajtTrade.symulacja.zadoby.produkty.Produkt;
 
 public abstract class Oferta<W extends Agent, K extends Agent> implements Comparable<Oferta<W, K>> {
   protected Produkt produkt;
+  protected final double początkowaIlość;
   protected final W wystawiający;
 
   protected Oferta(W wystawiający_, Produkt produkt_) {
     wystawiający = wystawiający_;
     produkt = produkt_;
+    początkowaIlość = produkt_.ilość();
   }
 
   /**
@@ -61,5 +63,9 @@ public abstract class Oferta<W extends Agent, K extends Agent> implements Compar
   @Override
   public int compareTo(Oferta<W, K> inna) {
     return produkt.compareTo(inna.produkt);
+  }
+
+  public double ilośćWypełnionych() {
+    return początkowaIlość - ilość();
   }
 }
