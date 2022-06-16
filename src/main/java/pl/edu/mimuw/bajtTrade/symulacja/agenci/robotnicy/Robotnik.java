@@ -186,4 +186,9 @@ public class Robotnik extends Agent {
   public TypyZasobów obecnaKariera() {
     return obecnaKariera;
   }
+
+  @Override
+  public double wynik() {
+    return żywy() ? super.wynik() : 0.;
+  }
 }

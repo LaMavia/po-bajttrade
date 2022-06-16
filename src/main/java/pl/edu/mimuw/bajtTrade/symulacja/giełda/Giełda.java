@@ -21,6 +21,12 @@ public abstract class Giełda {
   private List<OfertaSprzedażySpekulanta> ofertySprzedażySpekulantów = new ArrayList<>();
   private List<OfertaKupnaRobotnika> ofertyKupnaRobotników = new ArrayList<>();
   private List<OfertaSprzedażyRobotnika> ofertySprzedażyRobotników = new ArrayList<>();
+  protected final int numerDnia;
+
+
+  public Giełda(int numerDnia) {
+    this.numerDnia = numerDnia;
+  }
 
   public static boolean czyHandlowalny(TypyZasobów typ) {
     return typ != TypyZasobów.Diamenty;

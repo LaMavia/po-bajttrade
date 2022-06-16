@@ -49,7 +49,7 @@ public class Symulacja {
   }
 
   public void rozpocznij() {
-
+    
   }
 
   private void zasymulujDzień() {

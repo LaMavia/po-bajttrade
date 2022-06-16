@@ -59,4 +59,8 @@ public abstract class Agent {
   public int id() {
     return id;
   }
+
+  public double wynik() {
+    return zasoby.get(TypyZasobów.Diamenty).ilość();
+  }
 }
