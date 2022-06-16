@@ -7,7 +7,7 @@ import pl.edu.mimuw.bajtTrade.symulacja.zadoby.produkty.Produkt;
 
 public class OfertaSprzedażyRobotnika extends OfertaSprzedaży<Robotnik, Spekulant> {
 
-  protected OfertaSprzedażyRobotnika(Robotnik wystawiający_, Produkt produkt_) {
+  public OfertaSprzedażyRobotnika(Robotnik wystawiający_, Produkt produkt_) {
     super(wystawiający_, produkt_);
     //TODO Auto-generated constructor stub
   }

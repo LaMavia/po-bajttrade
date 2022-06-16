@@ -4,6 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Historia {
+  public class SkokWPrzyszłość extends RuntimeException {
+
+    public SkokWPrzyszłość(int dzień) {
+      super(String.format("Spróbowano zapytać o dzień %d, który jeszcze nie dobiegł końca. Obecny dzień: %d", dzień,
+          obecnyDzień));
+    }
+
+  }
+
   private List<OpisDnia> dni;
   private int obecnyDzień = 0;
 
@@ -12,16 +21,20 @@ public class Historia {
   }
 
   public OpisDnia dajDzień(int numer) {
-    return null;
-  }
+    if (numer <= 0) {
+      return dni.get(0);
+    }
 
-  public List<OpisDnia> dajDni(int początek, int koniec) {
-    return null;
+    if (numer >= obecnyDzień) {
+      throw new SkokWPrzyszłość(numer);
+    }
+
+    return dni.get(numer);
   }
 
   public void zapiszDzień(OpisDnia opis) {
     this.dni.add(opis);
-    
+
     obecnyDzień++;
   }
 }

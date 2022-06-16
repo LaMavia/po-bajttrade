@@ -17,7 +17,6 @@ public class Okresowy implements StrategiaZajęcia {
 
   @Override
   public boolean czySięUczy(Robotnik robotnik, Hashtable<TypyZasobów, Zasób> zasoby, int numerDnia, Historia historia) {
-    // TODO Auto-generated method stub
     return numerDnia % okresowośćNauki == 0;
   }
 

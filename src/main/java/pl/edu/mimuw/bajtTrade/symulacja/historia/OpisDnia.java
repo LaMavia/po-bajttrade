@@ -1,12 +1,14 @@
 package pl.edu.mimuw.bajtTrade.symulacja.historia;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Set;
+import java.util.function.BiFunction;
 
 import pl.edu.mimuw.bajtTrade.symulacja.giełda.Giełda;
+import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.Oferta;
+import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.Ocenowana;
 import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.kupna.OfertaKupnaSpekulanta;
 import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.sprzedaży.OfertaSprzedażySpekulanta;
 import pl.edu.mimuw.bajtTrade.symulacja.zadoby.TypyZasobów;
@@ -41,6 +43,14 @@ public class OpisDnia {
     obliczWystawienia(giełda);
   }
 
+  private <O extends Oferta<?, ?> & Ocenowana> void pomObliczExt(Hashtable<TypyZasobów, Double> ceny,
+      BiFunction<Double, Double, Double> wybierz, Set<TypyZasobów> zmienione, List<O> oferty) {
+    oferty.forEach((oferta) -> ceny.computeIfPresent(oferta.typ(), (t, cena) -> {
+      zmienione.add(t);
+      return wybierz.apply(cena, oferta.cenaZaSztukę());
+    }));
+  }
+
   private void obliczCenyMin(Giełda giełda, OpisDnia dzień0) {
     for (TypyZasobów t : TypyZasobów.values()) {
       if (Giełda.czyHandlowalny(t)) {
@@ -50,27 +60,8 @@ public class OpisDnia {
 
     Set<TypyZasobów> zmienione = new HashSet<>();
 
-    for (OfertaSprzedażySpekulanta oferta : giełda.ofertySprzedażySpekulantów()) {
-      if (oferta.ilośćWypełnionych() == 0.) {
-        continue;
-      }
-
-      TypyZasobów typ = oferta.typ();
-
-      cenyMin.put(typ, Math.min(cenyMin.get(typ), oferta.cenaZaSztukę()));
-      zmienione.add(typ);
-    }
-
-    for (OfertaKupnaSpekulanta oferta : giełda.ofertyKupnaSpekulantów()) {
-      if (oferta.ilośćWypełnionych() == 0.) {
-        continue;
-      }
-
-      TypyZasobów typ = oferta.typ();
-
-      cenyMin.put(typ, Math.min(cenyMin.get(typ), oferta.cenaZaSztukę()));
-      zmienione.add(typ);
-    }
+    pomObliczExt(cenyMin, (a, b) -> Math.min(a, b), zmienione, giełda.ofertySprzedażySpekulantów());
+    pomObliczExt(cenyMin, (a, b) -> Math.min(a, b), zmienione, giełda.ofertyKupnaSpekulantów());
 
     for (TypyZasobów typ : TypyZasobów.values()) {
       if (!zmienione.contains(typ) && Giełda.czyHandlowalny(typ)) {
@@ -88,27 +79,8 @@ public class OpisDnia {
 
     Set<TypyZasobów> zmienione = new HashSet<>();
 
-    for (OfertaSprzedażySpekulanta oferta : giełda.ofertySprzedażySpekulantów()) {
-      if (oferta.ilośćWypełnionych() == 0.) {
-        continue;
-      }
-
-      TypyZasobów typ = oferta.typ();
-
-      cenyMax.put(typ, Math.min(cenyMax.get(typ), oferta.cenaZaSztukę()));
-      zmienione.add(typ);
-    }
-
-    for (OfertaKupnaSpekulanta oferta : giełda.ofertyKupnaSpekulantów()) {
-      if (oferta.ilośćWypełnionych() == 0.) {
-        continue;
-      }
-
-      TypyZasobów typ = oferta.typ();
-
-      cenyMax.put(typ, Math.min(cenyMax.get(typ), oferta.cenaZaSztukę()));
-      zmienione.add(typ);
-    }
+    pomObliczExt(cenyMax, (a, b) -> Math.max(a, b), zmienione, giełda.ofertySprzedażySpekulantów());
+    pomObliczExt(cenyMax, (a, b) -> Math.max(a, b), zmienione, giełda.ofertyKupnaSpekulantów());
 
     for (TypyZasobów typ : TypyZasobów.values()) {
       if (!zmienione.contains(typ) && Giełda.czyHandlowalny(typ)) {

@@ -1,20 +1,20 @@
 package pl.edu.mimuw.bajtTrade.symulacja.zadoby.produkty;
 
-import pl.edu.mimuw.bajtTrade.symulacja.agenci.Agent;
-import pl.edu.mimuw.bajtTrade.symulacja.agenci.robotnicy.Robotnik;
-import pl.edu.mimuw.bajtTrade.symulacja.agenci.spekulanci.Spekulant;
-import pl.edu.mimuw.bajtTrade.symulacja.historia.Historia;
 import pl.edu.mimuw.bajtTrade.symulacja.zadoby.TypyZasobów;
 import pl.edu.mimuw.bajtTrade.symulacja.zadoby.Zasób;
 
-public abstract class Produkt implements Comparable<Produkt> {
-  private final TypyZasobów typ;
-  public double ilość;
+public class Produkt implements Comparable<Produkt> {
+  protected final TypyZasobów typ;
+  protected double ilość;
 
   public Produkt(TypyZasobów typ, double ilość) {
     this.typ = typ;
     this.ilość = ilość;
   }
+
+  public Produkt zIlości(double ilość) {
+    return new Produkt(typ(), ilość);
+  };
 
   public TypyZasobów typ() {
     return typ;
@@ -24,22 +24,23 @@ public abstract class Produkt implements Comparable<Produkt> {
     return ilość;
   }
 
-  public abstract void zaaplikujDo(Robotnik robotnik, Historia historia);
+  public final Produkt wydziel(double ilośćDoWydzielenia) {
+    double ilośćWydzielona = Math.min(ilość, ilośćDoWydzielenia);
+    ilość -= ilośćWydzielona;
 
-  public void zaaplikujDo(Spekulant spekulant, Historia historia) {
-
-  };
-
-  public final void zaaplikujDo(Agent agent, Historia historia) {
-    if (agent instanceof Robotnik) {
-      zaaplikujDo((Robotnik) agent, historia);
-    } else if (agent instanceof Spekulant) {
-      zaaplikujDo((Spekulant) agent, historia);
-    }
+    return zIlości(ilośćWydzielona);
   }
 
   @Override
   public int compareTo(Produkt inny) {
     return Zasób.numerTypu(typ()) - Zasób.numerTypu(inny.typ());
+  }
+
+  public static Produkt diament(double ilość) {
+    return new Produkt(TypyZasobów.Diamenty, ilość);
+  }
+
+  public static Produkt jedzenie(double ilość) {
+    return new Produkt(TypyZasobów.Jedzenie, ilość);
   }
 }

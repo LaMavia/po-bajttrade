@@ -6,8 +6,7 @@ import pl.edu.mimuw.bajtTrade.symulacja.giełda.oferty.Oferta;
 import pl.edu.mimuw.bajtTrade.symulacja.zadoby.produkty.Produkt;
 
 public class OfertaKupnaRobotnika extends OfertaKupna<Robotnik, Spekulant> {
-
-  protected OfertaKupnaRobotnika(Robotnik wystawiający_, Produkt produkt_) {
+  public OfertaKupnaRobotnika(Robotnik wystawiający_, Produkt produkt_) {
     super(wystawiający_, produkt_);
     // TODO Auto-generated constructor stub
   }

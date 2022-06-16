@@ -1,7 +1,5 @@
 package pl.edu.mimuw.bajtTrade;
 
-import java.util.Arrays;
-
 /**
  * Hello world!
  *

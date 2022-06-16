@@ -1,8 +1,14 @@
 package pl.edu.mimuw.bajtTrade.symulacja.zadoby;
 
+import java.util.List;
+import java.util.Map;
+import java.util.function.BiFunction;
+
+import pl.edu.mimuw.bajtTrade.symulacja.Symulacja.KonfiguracjaSymulacji;
 import pl.edu.mimuw.bajtTrade.symulacja.agenci.Agent;
-import pl.edu.mimuw.bajtTrade.symulacja.historia.Historia;
+import pl.edu.mimuw.bajtTrade.symulacja.agenci.robotnicy.Robotnik;
 import pl.edu.mimuw.bajtTrade.symulacja.zadoby.produkty.Produkt;
+import pl.edu.mimuw.bajtTrade.symulacja.zadoby.produkty.ProduktPoziomowy;
 
 public abstract class Zasób {
   protected Agent właściciel;
@@ -42,13 +48,11 @@ public abstract class Zasób {
 
   protected abstract void dodajBezpieczny(Produkt p);
 
-  public final void użyj(Produkt p, Historia historia) {
-    if (p.typ() != typ) {
-      return;
-    }
+  public abstract void zużyj(double ilość, Robotnik robotnik, Map<TypyZasobów, Integer> premie, KonfiguracjaSymulacji konfiguracja);
 
-    użyjBezpieczny(p, historia);
-  };
+  public abstract void zużyj(Robotnik robotnik, Map<TypyZasobów, Integer> premie, KonfiguracjaSymulacji konfiguracja);
 
-  protected abstract void użyjBezpieczny(Produkt p, Historia historia);
+  public abstract List<Produkt> zużyj(BiFunction<ProduktPoziomowy, ProduktPoziomowy, ProduktPoziomowy> f, Robotnik robotnik, ProduktPoziomowy produkt);
+
+  public abstract double ilość();
 }

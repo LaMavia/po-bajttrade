@@ -39,7 +39,7 @@ public abstract class Oferta<W extends Agent, K extends Agent> implements Compar
   public double odejmij(double docelowaIlość) {
     double faktycznieOdjęte = Math.min(produkt.ilość(), docelowaIlość);
 
-    produkt.ilość -= faktycznieOdjęte;
+    produkt.wydziel(faktycznieOdjęte);
 
     return faktycznieOdjęte;
   }
