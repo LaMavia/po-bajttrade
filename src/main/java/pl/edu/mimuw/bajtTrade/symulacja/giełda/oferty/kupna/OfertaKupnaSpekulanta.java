@@ -32,8 +32,13 @@ public class OfertaKupnaSpekulanta extends OfertaKupna<Spekulant, Robotnik> impl
 
   @Override
   public void wypełnij(Oferta<Robotnik, Spekulant> ofertaKomplementacyjna) {
-    super.wypełnij(ofertaKomplementacyjna);
+    double ileChciałobySięKupić = Math.min(ilość(), ofertaKomplementacyjna.ilość());
+    double naIleStać = Math.floor(ofertaKomplementacyjna.wystawiający().wynik() / cenaZaSztukę());
 
-    
+    double doWymiany = Math.min(ileChciałobySięKupić, naIleStać);
+    double doZapłaty = doWymiany * cenaZaSztukę();
+
+    wystawiający.nagrodź(-doZapłaty);
+    ofertaKomplementacyjna.wystawiający().nagrodź(doZapłaty);
   }
 }

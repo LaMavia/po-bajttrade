@@ -9,12 +9,4 @@ public abstract class OfertaKupna<W extends Agent, K extends Agent> extends Ofer
   protected OfertaKupna(W wystawiający_, Produkt produkt_) {
     super(wystawiający_, produkt_);
   }
-
-  @Override
-  public void wypełnij(Oferta<K, W> ofertaKomplementacyjna) {
-    double przemienione = ofertaKomplementacyjna.odejmij(produkt.ilość());
-
-    odejmij(przemienione);
-    wystawiający.daj(produkt);
-  }
 }

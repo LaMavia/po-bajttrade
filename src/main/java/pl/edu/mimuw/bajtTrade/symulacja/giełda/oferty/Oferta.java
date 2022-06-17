@@ -62,7 +62,11 @@ public abstract class Oferta<W extends Agent, K extends Agent> implements Compar
 
   @Override
   public int compareTo(Oferta<W, K> inna) {
-    return produkt.compareTo(inna.produkt);
+    int c = produkt.compareTo(inna.produkt);
+
+    if (c != 0) return c;
+
+    return wystawiający.id() - inna.wystawiający.id();
   }
 
   public double ilośćWypełnionych() {

@@ -27,6 +27,24 @@ public class OfertaSprzedażySpekulanta extends OfertaSprzedaży<Spekulant, Robo
       return c;
     }
 
-    return (int) Math.signum(cenaZaSztukę() - ((OfertaSprzedażySpekulanta) inna).cenaZaSztukę());
+    c = (int) Math.signum(cenaZaSztukę() - ((OfertaSprzedażySpekulanta) inna).cenaZaSztukę());
+
+    if (c != 0) {
+      return c;
+    }
+
+    return wystawiający().id() - inna.wystawiający().id();
+  }
+
+  @Override
+  public void wypełnij(Oferta<Robotnik, Spekulant> ofertaKomplementacyjna) {
+    double ileChciałobySięSprzedać = Math.min(ilość(), ofertaKomplementacyjna.ilość());
+    double naIleStać = Math.floor(ofertaKomplementacyjna.wystawiający().wynik() / cenaZaSztukę());
+
+    double doWymiany = Math.min(ileChciałobySięSprzedać, naIleStać);
+    double doZapłaty = doWymiany * cenaZaSztukę();
+
+    wystawiający.nagrodź(doZapłaty);
+    ofertaKomplementacyjna.wystawiający().nagrodź(-doZapłaty);
   }
 }

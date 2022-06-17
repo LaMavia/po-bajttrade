@@ -23,7 +23,6 @@ public abstract class Giełda {
   private List<OfertaSprzedażyRobotnika> ofertySprzedażyRobotników = new ArrayList<>();
   protected final int numerDnia;
 
-
   public Giełda(int numerDnia) {
     this.numerDnia = numerDnia;
   }
@@ -34,12 +33,16 @@ public abstract class Giełda {
 
   private void dopełnijOfertęKupna(OfertaKupnaRobotnika oferta,
       List<OfertaSprzedażySpekulanta> ofertyKomplementacyjne) {
-    oferta.wystawiający(); // !!
+    for (OfertaSprzedażySpekulanta ofertaKomplementacyjna : ofertyKomplementacyjne) {
+      oferta.wypełnij(ofertaKomplementacyjna);
+    }
   }
 
   private void dopełnijOfertęSprzedaży(OfertaSprzedażyRobotnika oferta,
       List<OfertaKupnaSpekulanta> ofertyKomplementacyjne) {
-    oferta.wystawiający(); // !!
+    for (OfertaKupnaSpekulanta ofertaKomplementacyjna : ofertyKomplementacyjne) {
+      oferta.wypełnij(ofertaKomplementacyjna);
+    }
   }
 
   protected abstract Iterable<ZeznanieOfertRobotnika> ustawRobotników(
