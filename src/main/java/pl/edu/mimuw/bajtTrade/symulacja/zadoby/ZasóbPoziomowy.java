@@ -19,7 +19,7 @@ import pl.edu.mimuw.bajtTrade.symulacja.zadoby.produkty.ProduktPoziomowy;
 
 public class ZasóbPoziomowy extends ZasóbIlościowy {
   private final Function<Integer, Integer> wytrzymałośćPoczątkowa;
-  protected Map<Para<Integer, Integer>, Integer> przedmioty = new HashMap<>();
+  protected Map<Para<Integer, Integer>, Integer> przedmioty = new HashMap<>(); // poziom * wytrzymałość
 
   public ZasóbPoziomowy(Agent właściciel_, TypyZasobów typ_,
       Function<Integer, Integer> wytrzymałośćPoczątkowa_) {
@@ -37,7 +37,8 @@ public class ZasóbPoziomowy extends ZasóbIlościowy {
   }
 
   @Override
-  public void zużyj(double ilość, Robotnik robotnik, Map<TypyZasobów, Integer> premie, KonfiguracjaSymulacji konfiguracja) {
+  public void zużyj(double ilość, Robotnik robotnik, Map<TypyZasobów, Integer> premie,
+      KonfiguracjaSymulacji konfiguracja) {
     zużyj(przedmioty.keySet(), (a, b) -> null, null, ilość, robotnik, premie);
   }
 
@@ -115,4 +116,21 @@ public class ZasóbPoziomowy extends ZasóbIlościowy {
 
   }
 
+  @Override
+  public List<Produkt> doProduktów() {
+    Map<Integer, Integer> poziomy = new Hashtable<>();
+    List<Produkt> wyjście = new ArrayList<>();
+
+    przedmioty.entrySet().forEach((wejście) -> {
+      poziomy.compute(wejście.getKey().p(), (t_, ilość) -> (ilość == null ? 0 : ilość) + wejście.getValue());
+    });
+
+    poziomy.entrySet().forEach((wejście) -> {
+      wyjście.add(new ProduktPoziomowy(typ, wejście.getKey(), wejście.getValue()));
+    });
+
+    przedmioty.clear();
+
+    return wyjście;
+  }
 }

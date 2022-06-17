@@ -20,7 +20,8 @@ public class OpisDnia {
   private Hashtable<TypyZasobów, Double> cenyMin = new Hashtable<>();
   private Hashtable<TypyZasobów, Double> cenyMax = new Hashtable<>();
   private Hashtable<TypyZasobów, Double> cenyŚrednie = new Hashtable<>();
-  private Hashtable<TypyZasobów, Integer> wystawieniaSprzedaży = new Hashtable<>();
+  private Hashtable<TypyZasobów, Integer> wystawieniaSprzedażyRobotników = new Hashtable<>();
+  private Hashtable<TypyZasobów, Integer> wystawieniaSprzedażySpekulantów = new Hashtable<>();
 
   public OpisDnia(Hashtable<TypyZasobów, Double> ceny) {
     dzień = 0;
@@ -28,10 +29,10 @@ public class OpisDnia {
     cenyŚrednie = ceny;
     cenyMax = ceny;
 
-    wystawieniaSprzedaży = new Hashtable<>();
     for (TypyZasobów typ : TypyZasobów.values()) {
       if (Giełda.czyHandlowalny(typ)) {
-        wystawieniaSprzedaży.put(typ, 0);
+        wystawieniaSprzedażyRobotników.put(typ, 0);
+        wystawieniaSprzedażySpekulantów.put(typ, 0);
       }
     }
   }
@@ -132,14 +133,15 @@ public class OpisDnia {
   private void obliczWystawienia(Giełda giełda) {
     for (TypyZasobów t : TypyZasobów.values()) {
       if (Giełda.czyHandlowalny(t)) {
-        wystawieniaSprzedaży.put(t, 0);
+        wystawieniaSprzedażyRobotników.put(t, 0);
+        wystawieniaSprzedażySpekulantów.put(t, 0);
       }
     }
 
     giełda.ofertySprzedażySpekulantów()
-        .forEach((oferta) -> wystawieniaSprzedaży.computeIfPresent(oferta.typ(), (t, s) -> s + 1));
+        .forEach((oferta) -> wystawieniaSprzedażySpekulantów.computeIfPresent(oferta.typ(), (t, s) -> s + 1));
     giełda.ofertySprzedażyRobotników()
-        .forEach((oferta) -> wystawieniaSprzedaży.computeIfPresent(oferta.typ(), (t, s) -> s + 1));
+        .forEach((oferta) -> wystawieniaSprzedażyRobotników.computeIfPresent(oferta.typ(), (t, s) -> s + 1));
   }
 
   public Double dajCenęŚrednią(TypyZasobów typ) {
@@ -155,7 +157,15 @@ public class OpisDnia {
   }
 
   public int ileWystawionoNaSprzedaż(TypyZasobów typ) {
-    return this.wystawieniaSprzedaży.getOrDefault(typ, 0);
+    return ileWystawionoNaSprzedażRobotników(typ) + ileWystawionoNaSprzedażSpekulantów(typ);
+  }
+
+  public int ileWystawionoNaSprzedażRobotników(TypyZasobów typ) {
+    return this.wystawieniaSprzedażyRobotników.getOrDefault(typ, 0);
+  }
+
+  public int ileWystawionoNaSprzedażSpekulantów(TypyZasobów typ) {
+    return this.wystawieniaSprzedażySpekulantów.getOrDefault(typ, 0);
   }
 
   public Para<TypyZasobów, Double> dajMaxCenęŚrednią() {

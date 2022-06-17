@@ -1,0 +1,83 @@
+src/main/java/pl/edu/mimuw/bajtTrade/
+├── App.java
+├── struktury
+│   ├── ListaPoziomowa.java
+│   └── Para.java
+└── symulacja
+    ├── agenci
+    │   ├── Agent.java
+    │   ├── robotnicy
+    │   │   ├── kariera
+    │   │   │   ├── Górnik.java
+    │   │   │   ├── Inżynier.java
+    │   │   │   ├── Kariera.java
+    │   │   │   ├── Programista.java
+    │   │   │   ├── Rolnik.java
+    │   │   │   └── Rzemieślnik.java
+    │   │   ├── Robotnik.java
+    │   │   └── strategia
+    │   │       ├── kupna
+    │   │       │   ├── Czyścioszek.java
+    │   │       │   ├── Gadżeciarz.java
+    │   │       │   ├── Technofob.java
+    │   │       │   └── Zmechanizowany.java
+    │   │       ├── nauki
+    │   │       │   ├── Konserwatysta.java
+    │   │       │   └── Rewolucjonista.java
+    │   │       ├── produkcji
+    │   │       │   ├── Chciwy.java
+    │   │       │   ├── Krótkowzroczny.java
+    │   │       │   ├── Losowy.java
+    │   │       │   ├── Perspektywiczny.java
+    │   │       │   └── Średniak.java
+    │   │       ├── StrategiaKupna.java
+    │   │       ├── StrategiaNauki.java
+    │   │       ├── StrategiaProdukcji.java
+    │   │       ├── StrategiaZajęcia.java
+    │   │       └── zajęcia
+    │   │           ├── Okresowy.java
+    │   │           ├── Oszczędny.java
+    │   │           ├── Pracuś.java
+    │   │           ├── Rozkładowy.java
+    │   │           └── Student.java
+    │   └── spekulanci
+    │       ├── Spekulant.java
+    │       └── strategie
+    ├── giełda
+    │   ├── Giełda.java
+    │   ├── GiełdaKapitalistyczna.java
+    │   ├── GiełdaSocjalistyczna.java
+    │   ├── oferty
+    │   │   ├── kupna
+    │   │   │   ├── OfertaKupna.java
+    │   │   │   ├── OfertaKupnaRobotnika.java
+    │   │   │   └── OfertaKupnaSpekulanta.java
+    │   │   ├── Ocenowana.java
+    │   │   ├── Oferta.java
+    │   │   ├── sprzedaży
+    │   │   │   ├── OfertaSprzedaży.java
+    │   │   │   ├── OfertaSprzedażyRobotnika.java
+    │   │   │   └── OfertaSprzedażySpekulanta.java
+    │   │   └── ZeznanieOfert.java
+    │   └── Zrównoważona.java
+    ├── historia
+    │   ├── Historia.java
+    │   └── OpisDnia.java
+    ├── Symulacja.java
+    └── zadoby
+        ├── ilościowe
+        │   ├── ZasóbDiamentów.java
+        │   └── ZasóbJedzenia.java
+        ├── poziomowe
+        │   ├── ZasóbNarzędzi.java
+        │   ├── ZasóbProgramówKomputerowych.java
+        │   └── ZasóbUbrań.java
+        ├── produkty
+        │   ├── Produkt.java
+        │   └── ProduktPoziomowy.java
+        ├── TypyZasobów.java
+        ├── ZasóbIlościowy.java
+        ├── Zasób.java
+        └── ZasóbPoziomowy.java
+
+21 directories, 59 files

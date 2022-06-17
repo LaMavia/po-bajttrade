@@ -49,7 +49,9 @@ public class Symulacja {
   }
 
   public void rozpocznij() {
-    
+    while (dzień < konfiguracja.długość()) {
+      zasymulujDzień();
+    }
   }
 
   private void zasymulujDzień() {
@@ -66,5 +68,7 @@ public class Symulacja {
     for (Spekulant spekulant : spekulanci) {
       zeznaniaSpekulantów.add((ZeznanieOfertSpekulanta) spekulant.rozegrajDzień(dzień, historia, konfiguracja));
     }
+
+    giełda.przeprowadźHandel(dzień, historia, zeznaniaRobotników, zeznaniaSpekulantów);
   }
 }

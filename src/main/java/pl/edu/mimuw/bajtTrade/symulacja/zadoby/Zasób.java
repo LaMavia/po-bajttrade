@@ -55,4 +55,6 @@ public abstract class Zasób {
   public abstract List<Produkt> zużyj(BiFunction<ProduktPoziomowy, ProduktPoziomowy, ProduktPoziomowy> f, Robotnik robotnik, ProduktPoziomowy produkt);
 
   public abstract double ilość();
+
+  public abstract List<Produkt> doProduktów();
 }

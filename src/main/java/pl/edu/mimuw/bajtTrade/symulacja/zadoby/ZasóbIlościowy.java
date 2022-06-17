@@ -1,5 +1,6 @@
 package pl.edu.mimuw.bajtTrade.symulacja.zadoby;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -41,5 +42,18 @@ public class ZasóbIlościowy extends Zasób {
   public List<Produkt> zużyj(BiFunction<ProduktPoziomowy, ProduktPoziomowy, ProduktPoziomowy> f, Robotnik robotnik,
       ProduktPoziomowy produkt) {
     throw new RuntimeException("Niepoprawne zużycie (mapowe) na zasobie ilościowym.");
+  }
+
+  @Override
+  public List<Produkt> doProduktów() {
+    List<Produkt> wyjście = new ArrayList<>();
+
+    if(ilość > 0) {
+      wyjście.add(new Produkt(typ, ilość));
+    }
+
+    ilość = 0;
+
+    return wyjście;
   }
 }
