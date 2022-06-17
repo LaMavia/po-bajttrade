@@ -34,12 +34,12 @@ public abstract class Giełda {
 
   private void dopełnijOfertęKupna(OfertaKupnaRobotnika oferta,
       List<OfertaSprzedażySpekulanta> ofertyKomplementacyjne) {
-    oferta.wystawiający();
+    oferta.wystawiający(); // !!
   }
 
   private void dopełnijOfertęSprzedaży(OfertaSprzedażyRobotnika oferta,
       List<OfertaKupnaSpekulanta> ofertyKomplementacyjne) {
-    oferta.wystawiający();
+    oferta.wystawiający(); // !!
   }
 
   protected abstract Iterable<ZeznanieOfertRobotnika> ustawRobotników(
@@ -76,7 +76,7 @@ public abstract class Giełda {
     }
 
     // zapisz w statystyce
-    historia.zapiszDzień(new OpisDnia(numerDnia, this, historia.dajDzień(0)));
+    historia.zapiszDzień(OpisDnia.całkowity(numerDnia, this, historia.dajDzień(0)));
 
     // rozlicz oferty robotników
     List<OfertaSprzedażyRobotnika> ofertyDoSkupu = new ArrayList<>();

@@ -1,23 +1,23 @@
 package pl.edu.mimuw.bajtTrade.symulacja.historia;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Hashtable;
+import java.util.Map;
 
 public class Historia {
   public class SkokWPrzyszłość extends RuntimeException {
 
     public SkokWPrzyszłość(int dzień) {
-      super(String.format("Spróbowano zapytać o dzień %d, który jeszcze nie dobiegł końca. Obecny dzień: %d", dzień,
+      super(String.format("Spróbowano zapytać o dzień %d, który jeszcze nie nastał. Obecny dzień: %d", dzień,
           obecnyDzień));
     }
 
   }
 
-  private List<OpisDnia> dni;
+  private Map<Integer, OpisDnia> dni;
   private int obecnyDzień = 0;
 
   public Historia() {
-    dni = new ArrayList<>();
+    dni = new Hashtable<>();
   }
 
   public OpisDnia dajDzień(int numer) {
@@ -25,7 +25,7 @@ public class Historia {
       return dni.get(0);
     }
 
-    if (numer >= obecnyDzień) {
+    if (numer > obecnyDzień) {
       throw new SkokWPrzyszłość(numer);
     }
 
@@ -33,8 +33,9 @@ public class Historia {
   }
 
   public void zapiszDzień(OpisDnia opis) {
-    this.dni.add(opis);
+    this.dni.put(opis.dzień(), opis);
 
-    obecnyDzień++;
+    if (opis.pełen())
+      obecnyDzień++;
   }
 }

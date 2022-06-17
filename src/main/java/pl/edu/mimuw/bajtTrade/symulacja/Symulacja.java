@@ -65,6 +65,8 @@ public class Symulacja {
         zeznaniaRobotników.add((ZeznanieOfertRobotnika) robotnik.rozegrajDzień(dzień, historia, konfiguracja));
     }
 
+    historia.zapiszDzień(OpisDnia.częściowy(dzień, giełda, historia.dajDzień(0)));
+
     for (Spekulant spekulant : spekulanci) {
       zeznaniaSpekulantów.add((ZeznanieOfertSpekulanta) spekulant.rozegrajDzień(dzień, historia, konfiguracja));
     }

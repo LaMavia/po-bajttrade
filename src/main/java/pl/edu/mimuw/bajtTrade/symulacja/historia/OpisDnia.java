@@ -17,6 +17,7 @@ import pl.edu.mimuw.bajtTrade.symulacja.zadoby.TypyZasobów;
 
 public class OpisDnia {
   private int dzień;
+  private boolean pełen = false;
   private Hashtable<TypyZasobów, Double> cenyMin = new Hashtable<>();
   private Hashtable<TypyZasobów, Double> cenyMax = new Hashtable<>();
   private Hashtable<TypyZasobów, Double> cenyŚrednie = new Hashtable<>();
@@ -28,6 +29,7 @@ public class OpisDnia {
     cenyMin = ceny;
     cenyŚrednie = ceny;
     cenyMax = ceny;
+    pełen = true;
 
     for (TypyZasobów typ : TypyZasobów.values()) {
       if (Giełda.czyHandlowalny(typ)) {
@@ -37,13 +39,21 @@ public class OpisDnia {
     }
   }
 
-  public OpisDnia(int dzień_, Giełda giełda, OpisDnia dzień0) {
+  private OpisDnia(int dzień_, Giełda giełda, OpisDnia dzień0, boolean pełen) {
     dzień = dzień_;
 
     obliczCenyMin(giełda, dzień0);
     obliczCenyMax(giełda, dzień0);
     obliczCenyŚrednie(giełda, dzień0);
     obliczWystawienia(giełda);
+  }
+
+  public static OpisDnia częściowy(int dzień, Giełda giełda, OpisDnia dzień0) {
+    return new OpisDnia(dzień, giełda, dzień0, false);
+  }
+
+  public static OpisDnia całkowity(int dzień, Giełda giełda, OpisDnia dzień0) {
+    return new OpisDnia(dzień, giełda, dzień0, true);
   }
 
   private <O extends Oferta<?, ?> & Ocenowana> void pomObliczExt(Hashtable<TypyZasobów, Double> ceny,
@@ -191,5 +201,9 @@ public class OpisDnia {
 
   public int dzień() {
     return dzień;
+  }
+
+  public boolean pełen() {
+    return pełen;
   }
 }
